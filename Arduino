@@ -1,0 +1,32 @@
+#include <Arduino.h>
+
+const int button1Pin = 2;
+const int button2Pin = 3;
+const int ledGreenPin = 4;
+const int ledRedPin = 5;
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(button1Pin, INPUT_PULLUP);
+  pinMode(button2Pin, INPUT_PULLUP);
+
+  pinMode(ledGreenPin, OUTPUT);
+  pinMode(ledRedPin, OUTPUT);
+}
+
+void loop() {
+  int button1State = digitalRead(button1Pin);
+  int button2State = digitalRead(button2Pin);
+
+  digitalWrite(ledGreenPin, button1State == LOW ? HIGH : LOW);
+
+  digitalWrite(ledRedPin, button2State == LOW ? HIGH : LOW);
+
+  if (button1State == LOW || button2State == LOW) {
+    Serial.print(button1State == LOW ? "Button1: Pressed" : "Button1: Released");
+    Serial.print(", ");
+    Serial.println(button2State == LOW ? "Button2: Pressed" : "Button2: Released");
+    delay(100); 
+  }
+}
